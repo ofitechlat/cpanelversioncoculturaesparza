@@ -8,20 +8,7 @@ const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
-  // Close mobile menu when route changes
-  useEffect(() => {
-    setIsMenuOpen(false);
-  }, [location]);
-
-  // Handle scroll events for header appearance
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // ... existing useEffect hooks ...
 
   return (
     <header
@@ -31,14 +18,14 @@ const Header: React.FC = () => {
           : 'bg-transparent py-4'
       }`}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center">
+      <div className="container px-4 mx-auto">
+        <div className="flex items-center justify-between">
           <Link to="/" className="z-10">
-            <Logo className={isScrolled ? 'text-teal-600' : 'text-white'} />
+            <Logo className={isScrolled ? 'text-gray-800 hover:text-teal-600' : 'text-white hover:text-teal-300'} />
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8 items-center">
+          <nav className="items-center hidden space-x-8 md:flex">
             {['Home', 'Activities', 'About', 'Contact'].map((item) => (
               <Link
                 key={item}
@@ -50,12 +37,30 @@ const Header: React.FC = () => {
                 {item}
               </Link>
             ))}
+            <Link
+              to="/login"
+              className={`font-medium transition-colors ${
+                isScrolled ? 'text-gray-800 hover:text-teal-600' : 'text-white hover:text-teal-300'
+              }`}
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className={`font-medium transition-colors px-4 py-2 rounded ${
+                isScrolled 
+                  ? 'bg-teal-600 text-white hover:bg-teal-700' 
+                  : 'bg-white text-teal-600 hover:bg-teal-100'
+              }`}
+            >
+              Register
+            </Link>
           </nav>
 
           {/* Mobile menu button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden z-10 focus:outline-none"
+            className="z-10 md:hidden focus:outline-none"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? (
@@ -68,16 +73,28 @@ const Header: React.FC = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden absolute top-0 left-0 right-0 bottom-0 h-screen bg-white p-6 flex flex-col space-y-8 pt-24 animate-fade-in">
+          <div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col h-screen p-6 pt-24 space-y-8 bg-white md:hidden animate-fade-in">
             {['Home', 'Activities', 'About', 'Contact'].map((item) => (
               <Link
                 key={item}
                 to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
-                className="text-xl font-medium text-gray-800 hover:text-teal-600 transition-colors"
+                className="text-xl font-medium text-gray-800 transition-colors hover:text-teal-600"
               >
                 {item}
               </Link>
             ))}
+            <Link
+              to="/login"
+              className="text-xl font-medium text-gray-800 transition-colors hover:text-teal-600"
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className="px-4 py-2 text-xl font-medium text-white transition-colors bg-teal-600 rounded hover:bg-teal-700"
+            >
+              Register
+            </Link>
           </div>
         )}
       </div>
