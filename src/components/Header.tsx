@@ -31,14 +31,14 @@ const Header: React.FC = () => {
           : 'bg-transparent py-4'
       }`}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center">
+      <div className="container px-4 mx-auto">
+        <div className="flex items-center justify-between">
           <Link to="/" className="z-10">
             <Logo className={isScrolled ? 'text-teal-600' : 'text-white'} />
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8 items-center">
+          <nav className="items-center hidden space-x-8 md:flex">
             {['Home', 'Activities', 'About', 'Contact'].map((item) => (
               <Link
                 key={item}
@@ -50,12 +50,36 @@ const Header: React.FC = () => {
                 {item}
               </Link>
             ))}
+
+            {/* Login Button */}
+            <button className="hidden md:block">
+              <Link
+                to="/login"
+                className={`hidden md:inline-block px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-md shadow hover:bg-teal-700 transition-colors ${
+                  isScrolled ? 'bg-teal-600' : 'bg-transparent'
+                }`}
+              >
+                Login
+              </Link>
+            </button>
+
+            {/* Register Button */}
+            <button className="hidden md:block">
+              <Link
+                to="/register"
+                className={`hidden md:inline-block px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-md shadow hover:bg-teal-700 transition-colors ${
+                  isScrolled ? 'bg-teal-600' : 'bg-transparent'
+                }`}
+              >
+                Register
+              </Link>
+            </button>
           </nav>
 
           {/* Mobile menu button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden z-10 focus:outline-none"
+            className="z-10 md:hidden focus:outline-none"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? (
@@ -68,18 +92,30 @@ const Header: React.FC = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden absolute top-0 left-0 right-0 bottom-0 h-screen bg-white p-6 flex flex-col space-y-8 pt-24 animate-fade-in">
+          <div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col h-screen p-6 pt-24 space-y-8 bg-white md:hidden animate-fade-in">
             {['Home', 'Activities', 'About', 'Contact'].map((item) => (
               <Link
                 key={item}
                 to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
-                className="text-xl font-medium text-gray-800 hover:text-teal-600 transition-colors"
+                className="text-xl font-medium text-gray-800 transition-colors hover:text-teal-600"
               >
                 {item}
               </Link>
             ))}
+            {/* Login button */}
+            <Link
+              to="/login"
+              className="text-xl font-medium text-gray-800 transition-colors hover:text-teal-600"
+              type='button'
+            >
+              Login
+            </Link>
+            {/* Register button */}
+                        
           </div>
         )}
+
+
       </div>
     </header>
   );
